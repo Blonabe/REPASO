@@ -1,2 +1,0 @@
-# REPASO
-Plan mejora

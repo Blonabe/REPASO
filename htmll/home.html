@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelDream - Agencia de Viajes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1506929562872-bb421503ef21');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 30px;
+        }
+        
+        .search-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border: none;
+        }
+        
+        .promo-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .promo-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .promo-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .reserva-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        .step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+        
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 60%;
+            width: 80%;
+            height: 2px;
+            background-color: var(--secondary-color);
+            z-index: -1;
+        }
+        
+        .step:last-child::after {
+            display: none;
+        }
+        
+        .dashboard-card {
+            border-left: 4px solid var(--secondary-color);
+            transition: transform 0.3s;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--primary-color);">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-plane-departure me-2"></i>TravelDream
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Paquetes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Vuelos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hoteles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ofertas</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fas fa-user"></i> Iniciar Sesión
+                    </a>
+                    <a href="register.html" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 mb-4">Descubre tu próximo destino soñado</h1>
+                    <p class="lead mb-5">Encuentra las mejores ofertas en paquetes turísticos, vuelos y hoteles alrededor del mundo</p>
+                </div>
+            </div>
+            
+            
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="search-card">
+                        <ul class="nav nav-pills mb-4 justify-content-center" id="searchTabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="pill" href="#paquetes">Paquetes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="pill" href="#vuelos">Vuelos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="pill" href="#hoteles">Hoteles</a>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content">
+                       
+                            <div class="tab-pane fade show active" id="paquetes">
+                                <form>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="destino" class="form-label">Destino</label>
+                                            <input type="text" class="form-control" id="destino" placeholder="¿A dónde quieres viajar?">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="fecha-salida" class="form-label">Fecha de salida</label>
+                                            <input type="date" class="form-control" id="fecha-salida">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="fecha-regreso" class="form-label">Fecha de regreso</label>
+                                            <input type="date" class="form-control" id="fecha-regreso">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="pasajeros" class="form-label">Pasajeros</label>
+                                            <select class="form-select" id="pasajeros">
+                                                <option>1 adulto</option>
+                                                <option selected>2 adultos</option>
+                                                <option>3 adultos</option>
+                                                <option>4 adultos</option>
+                                                <option>Familia (2 adultos + 2 niños)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="precio-max" class="form-label">Precio máximo</label>
+                                            <select class="form-select" id="precio-max">
+                                                <option>Cualquier precio</option>
+                                                <option>Hasta $10,000</option>
+                                                <option>Hasta $20,000</option>
+                                                <option>Hasta $30,000</option>
+                                                <option>Hasta $50,000</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 d-flex align-items-end">
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <i class="fas fa-search me-2"></i> Buscar Paquetes
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                          
+                            <div class="tab-pane fade" id="vuelos">
+                              
+                            </div>
+                            
+                           
+                            <div class="tab-pane fade" id="hoteles">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="container mb-5">
+        <div class="row mb-4">
+            <div class="col text-center">
+                <h2 class="fw-bold">Reserva en 3 sencillos pasos</h2>
+                <p class="text-muted">Proceso rápido y seguro con confirmación inmediata</p>
+            </div>
+        </div>
+        <div class="reserva-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h5>Busca y selecciona</h5>
+                <p class="text-muted">Encuentra tu destino ideal con nuestros filtros avanzados</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h5>Personaliza tu viaje</h5>
+                <p class="text-muted">Elige hoteles, vuelos y actividades adicionales</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h5>Paga y recibe tu voucher</h5>
+                <p class="text-muted">Pago seguro con confirmación inmediata por email</p>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="container mb-5">
+        <div class="row mb-4">
+            <div class="col text-center">
+                <h2 class="fw-bold">Ofertas Especiales</h2>
+                <p class="text-muted">Aprovecha estas increíbles promociones por tiempo limitado</p>
+            </div>
+        </div>
+        <div class="row">
+         
+            <div class="col-md-4">
+                <div class="card promo-card">
+                    <span class="promo-badge">-25%</span>
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4" class="card-img-top" alt="Cancún">
+                    <div class="card-body">
+                        <h5 class="card-title">Cancún Todo Incluido</h5>
+                        <p class="text-muted"><i class="fas fa-calendar-alt me-2"></i>Válido hasta: 15/12/2023</p>
+                        <p class="card-text">Disfruta 7 noches en hotel 5 estrellas con vuelo incluido desde la CDMX.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-decoration-line-through text-muted me-2">$24,999</span>
+                                <span class="fw-bold text-danger">$18,749</span>
+                            </div>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#reservaModal">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="col-md-4">
+                <div class="card promo-card">
+                    <span class="promo-badge">-30%</span>
+                    <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2" class="card-img-top" alt="Europa">
+                    <div class="card-body">
+                        <h5 class="card-title">Tour Europa Clásica</h5>
+                        <p class="text-muted"><i class="fas fa-calendar-alt me-2"></i>Válido hasta: 30/11/2023</p>
+                        <p class="card-text">12 días visitando París, Roma y Barcelona con alojamiento y desayuno.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-decoration-line-through text-muted me-2">$45,999</span>
+                                <span class="fw-bold text-danger">$32,199</span>
+                            </div>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#reservaModal">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="col-md-4">
+                <div class="card promo-card">
+                    <span class="promo-badge">-15%</span>
+                    <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25" class="card-img-top" alt="Nueva York">
+                    <div class="card-body">
+                        <h5 class="card-title">Fin de Semana en NY</h5>
+                        <p class="text-muted"><i class="fas fa-calendar-alt me-2"></i>Válido hasta: 20/01/2024</p>
+                        <p class="card-text">3 noches en hotel céntrico + vuelo + tour por la ciudad.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="text-decoration-line-through text-muted me-2">$15,499</span>
+                                <span class="fw-bold text-danger">$13,174</span>
+                            </div>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#reservaModal">Reservar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Recordar mi sesión</label>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+                        <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+   
+    <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservaModalLabel">Completar Reserva</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="reserva-steps mb-4">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h6>Datos del viaje</h6>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h6>Información personal</h6>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h6>Pago</h6>
+                        </div>
+                    </div>
+                    
+                    <form id="reservaForm">
+                        
+                        <div class="reserva-paso" id="paso1">
+                            <h5 class="mb-3">Detalles de tu paquete</h5>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4" class="img-fluid rounded" alt="Paquete">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h5>Cancún Todo Incluido</h5>
+                                            <p><i class="fas fa-calendar-alt me-2"></i>15 al 22 Diciembre 2023</p>
+                                            <p><i class="fas fa-users me-2"></i>2 adultos</p>
+                                            <p><i class="fas fa-hotel me-2"></i>Hotel Grand Paradise 5*</p>
+                                            <h5 class="text-primary">$18,749 <small class="text-muted">(antes $24,999)</small></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-primary siguiente-paso" data-paso="2">Siguiente</button>
+                            </div>
+                        </div>
+                    
+                        <div class="reserva-paso" id="paso2" style="display: none;">
+                            <h5 class="mb-3">Información del viajero</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nombrePasajero" class="form-label">Nombre completo</label>
+                                    <input type="text" class="form-control" id="nombrePasajero" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="emailPasajero" class="form-label">Correo electrónico</label>
+                                    <input type="email" class="form-control" id="emailPasajero" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="telefonoPasajero" class="form-label">Teléfono</label>
+                                    <input type="tel" class="form-control" id="telefonoPasajero" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="documentoPasajero" class="form-label">Documento de identidad</label>
+                                    <input type="text" class="form-control" id="documentoPasajero" required>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary anterior-paso" data-paso="1">Anterior</button>
+                                <button type="button" class="btn btn-primary siguiente-paso" data-paso="3">Siguiente</button>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="reserva-paso" id="paso3" style="display: none;">
+                            <h5 class="mb-3">Método de pago</h5>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="radio" name="metodoPago" id="tarjetaCredito" checked>
+                                                <label class="form-check-label" for="tarjetaCredito">
+                                                    Tarjeta de crédito/débito
+                                                </label>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="radio" name="metodoPago" id="transferencia">
+                                                <label class="form-check-label" for="transferencia">
+                                                    Transferencia bancaria
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="metodoPago" id="paypal">
+                                                <label class="form-check-label" for="paypal">
+                                                    PayPal
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="tarjetaForm">
+                                                <div class="mb-3">
+                                                    <label for="numeroTarjeta" class="form-label">Número de tarjeta</label>
+                                                    <input type="text" class="form-control" id="numeroTarjeta" placeholder="1234 5678 9012 3456">
+                                                </div>
+                                                <div class="row g-2">
+                                                    <div class="col-md-6">
+                                                        <label for="fechaExpiracion" class="form-label">Fecha de expiración</label>
+                                                        <input type="text" class="form-control" id="fechaExpiracion" placeholder="MM/AA">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="cvv" class="form-label">CVV</label>
+                                                        <input type="text" class="form-control" id="cvv" placeholder="123">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Resumen de compra</h5>
+                                    <table class="table">
+                                        <tr>
+                                            <td>Paquete Cancún</td>
+                                            <td class="text-end">$18,749</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Impuestos y cargos</td>
+                                            <td class="text-end">$1,250</td>
+                                        </tr>
+                                        <tr class="fw-bold">
+                                            <td>Total</td>
+                                            <td class="text-end">$19,999</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary anterior-paso" data-paso="2">Anterior</button>
+                                <button type="submit" class="btn btn-success">Confirmar y Pagar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-4"><i class="fas fa-plane-departure me-2"></i>TravelDream</h5>
+                    <p>La mejor agencia de viajes con las ofertas más competitivas y un servicio personalizado.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5 class="mb-4">Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white">Inicio</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Paquetes</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Vuelos</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Hoteles</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Ofertas</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-4">Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Av. Viajes 123, CDMX</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +52 55 1234 5678</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@traveldream.com</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-4">Boletín</h5>
+                    <p>Suscríbete para recibir nuestras mejores ofertas.</p>
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Tu correo">
+                            <button class="btn btn-primary" type="button">Suscribir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2023 TravelDream. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white me-3">Términos y condiciones</a>
+                    <a href="#" class="text-white">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Función para inicializar todos los componentes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Manejo del formulario de inicio de sesión
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Obtener valores del formulario
+                    const email = document.getElementById('loginEmail').value.trim();
+                    const password = document.getElementById('loginPassword').value;
+                    const rememberMe = document.getElementById('rememberMe').checked;
+                    
+                    // Validar campos
+                    if (!email || !password) {
+                        showLoginAlert('Por favor complete todos los campos', 'danger');
+                        return;
+                    }
+                    
+                    if (!validateEmail(email)) {
+                        showLoginAlert('Por favor ingrese un correo electrónico válido', 'danger');
+                        return;
+                    }
+                    
+                    // Mostrar indicador de carga
+                    const submitButton = loginForm.querySelector('button[type="submit"]');
+                    const originalText = submitButton.innerHTML;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Ingresando...';
+                    submitButton.disabled = true;
+                    
+                    // Simular autenticación (en un caso real sería una llamada al backend)
+                    setTimeout(() => {
+                        // Aquí normalmente harías una petición fetch o AJAX al backend
+                        // fetch('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
+                        // .then(response => response.json())
+                        // .then(data => { ... })
+                        
+                        // Simular respuesta exitosa
+                        console.log('Inicio de sesión exitoso:', { email, rememberMe });
+                        
+                        // Guardar en localStorage si marcó "Recordar sesión"
+                        if (rememberMe) {
+                            localStorage.setItem('userEmail', email);
+                            localStorage.setItem('rememberMe', 'true');
+                        } else {
+                            sessionStorage.setItem('userEmail', email);
+                        }
+                        
+                        // Mostrar mensaje de éxito
+                        showLoginAlert('¡Inicio de sesión exitoso! Redirigiendo...', 'success');
+                        
+                        // Cerrar el modal después de 1.5 segundos
+                        setTimeout(() => {
+                            const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                            if (loginModal) {
+                                loginModal.hide();
+                            }
+                            
+                            // Redirigir al dashboard o página principal
+                            window.location.href = 'profile.html';
+                        }, 1500);
+                        
+                        // Restaurar botón (por si hay error)
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
+                    }, 1500);
+                });
+            }
+            
+            // Cargar datos de "Recordar sesión" si existen
+            if (localStorage.getItem('rememberMe') === 'true' && localStorage.getItem('userEmail')) {
+                document.getElementById('loginEmail').value = localStorage.getItem('userEmail');
+                document.getElementById('rememberMe').checked = true;
+            }
+            
+            // Función para mostrar alertas en el formulario de login
+            function showLoginAlert(message, type) {
+                // Eliminar alertas anteriores
+                const existingAlert = document.querySelector('#loginForm .alert');
+                if (existingAlert) {
+                    existingAlert.remove();
+                }
+                
+                // Crear alerta
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${type} mt-3`;
+                alertDiv.textContent = message;
+                
+                // Insertar después del formulario
+                const form = document.getElementById('loginForm');
+                form.appendChild(alertDiv);
+                
+                // Desaparecer después de 5 segundos
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
+            }
+            
+            // Función para validar email
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            // Manejo del enlace "¿Olvidaste tu contraseña?"
+            const forgotPasswordLink = document.querySelector('#loginModal a[href="#"]');
+            if (forgotPasswordLink) {
+                forgotPasswordLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showPasswordRecovery();
+                });
+            }
+            
+            // Función para mostrar el formulario de recuperación de contraseña
+            function showPasswordRecovery() {
+                const modalBody = document.querySelector('#loginModal .modal-body');
+                if (modalBody) {
+                    modalBody.innerHTML = `
+                        <h5 class="mb-4">Recuperar contraseña</h5>
+                        <form id="recoveryForm">
+                            <div class="mb-3">
+                                <label for="recoveryEmail" class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" id="recoveryEmail" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Enviar enlace</button>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3">
+                            <p><a href="#" class="back-to-login">Volver al inicio de sesión</a></p>
+                        </div>
+                    `;
+                    
+                    // Manejar el envío del formulario de recuperación
+                    const recoveryForm = document.getElementById('recoveryForm');
+                    if (recoveryForm) {
+                        recoveryForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            const email = document.getElementById('recoveryEmail').value.trim();
+                            
+                            if (!validateEmail(email)) {
+                                showLoginAlert('Por favor ingrese un correo electrónico válido', 'danger');
+                                return;
+                            }
+                            
+                            // Simular envío de enlace de recuperación
+                            console.log('Enviando enlace de recuperación a:', email);
+                            showLoginAlert('Se ha enviado un enlace para restablecer tu contraseña a tu correo electrónico', 'success');
+                            
+                            // Volver al formulario de login después de 3 segundos
+                            setTimeout(() => {
+                                restoreLoginForm();
+                            }, 3000);
+                        });
+                    }
+                    
+                    // Manejar el clic en "Volver al inicio de sesión"
+                    const backToLogin = document.querySelector('.back-to-login');
+                    if (backToLogin) {
+                        backToLogin.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            restoreLoginForm();
+                        });
+                    }
+                }
+            }
+            
+            // Función para restaurar el formulario de login original
+            function restoreLoginForm() {
+                const modalBody = document.querySelector('#loginModal .modal-body');
+                if (modalBody) {
+                    modalBody.innerHTML = `
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" id="loginEmail" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="loginPassword" required>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Recordar mi sesión</label>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Ingresar</button>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3">
+                            <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+                            <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+                        </div>
+                    `;
+                    
+                    // Volver a inicializar el evento del formulario
+                    const loginForm = document.getElementById('loginForm');
+                    if (loginForm) {
+                        loginForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            // ... (el mismo código de manejo de login que arriba)
+                        });
+                    }
+                    
+                    // Restaurar datos si estaban en "Recordar sesión"
+                    if (localStorage.getItem('rememberMe') === 'true' && localStorage.getItem('userEmail')) {
+                        document.getElementById('loginEmail').value = localStorage.getItem('userEmail');
+                        document.getElementById('rememberMe').checked = true;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
